@@ -48,6 +48,9 @@ bot.command('price', async (ctx: Context) => {
       
       message += '\n' + line.priceStr;
     }
+    message += '\n\n'
+    message += `Percent Change(1h): ${stats.percent_change_1h.btc}%\n`
+    message += `Percent Change(24h): ${stats.percent_change_24h.btc}%`
     
     message += "```"
     
