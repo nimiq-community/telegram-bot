@@ -14,8 +14,11 @@
   "author": "Stefan Koolen",
   "license": "MIT",
   "dependencies": {
+    "@nimiq/core": "^1.5.5",
     "@types/node": "^14.0.11",
+    "@types/node-fetch": "^2.5.7",
     "dotenv": "^8.2.0",
+    "node-fetch": "^2.6.0",
     "telegraf": "^3.38.0",
     "typescript": "^3.9.5"
   }
