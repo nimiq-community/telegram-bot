@@ -8,6 +8,13 @@ import { nimiqx, nimiqWatch } from "./sources";
 // Load .env file
 dotenv.config();
 
+// Log commands so they can be registered easily at BotFather
+console.log(`price - Check the current NIM price
+profit - Check how much you earn by mining
+source - Link to source code
+supply - Current supply of NIM coins
+whales - Biggest accounts $$$`)
+
 // Create new Telegraf instance. Assume Telegram token is properly set
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN as string)
 bot.start(ctx => {
