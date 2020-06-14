@@ -4,14 +4,18 @@ import Nimiq from "@nimiq/core";
 
 import { humanNIM, humanHashes } from "./helpers";
 import { nimiqx, nimiqWatch } from "./sources";
+import { NimiqxPool } from "./types";
 
 // Load .env file
 dotenv.config();
 
 // Log commands so they can be registered easily at BotFather
-const comamands = `price - Check the current NIM price
+const comamands = `channels - List of international Nimiq channels
+discord - Link to Nimiq Discord server
+pools - List of mining pools
+price - Check the current NIM price
 profit - Check how much you earn by mining
-source - Link to source code
+source - Link my source code
 supply - Current supply of NIM coins
 whales - Biggest accounts $$$`
 
@@ -19,6 +23,56 @@ whales - Biggest accounts $$$`
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN as string)
 bot.start(ctx => {
   ctx.reply("Hey, I'm Nimiq Telegram bot 👋 I provide information about the Nimiq network. Add me to a group to start 😌. Type / for a list of commands.");
+})
+
+bot.command('channels', (ctx: Context) => {
+  ctx.reply(`International Channels
+
+Coders - @NimiqCoders
+Nimiq Traders - @NimiqTraders
+
+Balkan - @NimiqBalkan
+Deutsch - @nimiqDE
+Dutch - @nimiqNL
+Espanol - @nimiqES
+Francais - @nimiqFR
+India - @NimiqIndia
+Indonesia - @NimiqIndonesia
+Japanese - @nimiqJA
+Latvian - @nimiqLV
+Malaysian - @nimiqMY
+Persian - @Nimiqpersian
+Philippines - @NimiqPH
+Portuguese - @nimiqBR
+Russian - @nimiqRussia
+Turkish - @nimiqTR
+Vietnamese - @nimiqVN`), {
+    parse_mode: 'Markdown',
+    disable_web_page_preview: true,
+    disable_notification: true,
+  }
+})
+
+bot.command('discord', (ctx: Context) => {
+  ctx.reply("Here is a link to the official Nimiq Discord: https://discord.gg/cMHemg8");
+})
+
+bot.command('pools', async (ctx: Context) => {
+  const pools: NimiqxPool[] = await nimiqx('https://api.nimiqx.com/pools-list');
+
+  let message = '';
+  for (const pool in pools) {
+    if (pools.hasOwnProperty(pool)) {
+      const p = pools[pool];
+      message += `[${p.name}](${p.website})\n`
+    }
+  }
+
+  ctx.reply(message, {
+    parse_mode: 'Markdown',
+    disable_web_page_preview: true,
+    disable_notification: true,
+  });
 })
 
 bot.command('price', async (ctx: Context) => {
